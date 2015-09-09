@@ -7,8 +7,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * parsowanie akrkusza quizów
- * program pobieraj¹cy dane z arkusza i na podstawie istniej¹cych katalogow i plikow generuje plik smanifest
+ * parsowanie akrkusza quizï¿½w
+ * program pobierajï¿½cy dane z arkusza i na podstawie istniejï¿½cych katalogow i plikow generuje plik smanifest
  * @author Euro-Forum_B3
  *
  */
@@ -31,7 +31,6 @@ public class Pars {
 			
 			liczLinie++;
 		}
-
 			System.out.println(liczLinie); 
 		br.close();
 	}
@@ -42,6 +41,7 @@ public class Pars {
 
 		String kolumny[] = s.split("\t"); // zapisuje do tablicy wyrazy
 											// rozdzielone spacja
+		// tworzenie tablic z pods programowa i kodami
 		String podstawa = kolumny[5];
 		int liczPrzed = podstawa.length() - podstawa.replace(";", "").length() + 1;
 		String przedmioty[] = new String[liczPrzed];
@@ -68,6 +68,7 @@ public class Pars {
 					}
 				}
 			}
+			// punkty podstawy programowej
 			if (i == 6) {
 				String[] tempTab = kolumny[i].split(";");
 			//	System.out.println(tempTab.length + "," + liczPrzed);
@@ -99,7 +100,7 @@ public class Pars {
 	// public static void splitThis(String[] kol, String[] sKlucz)
 	public static void zapis(String[] kol, String[] sKlucz, String[] przedmiot, String[][] kod)
 			throws FileNotFoundException {
-		System.out.println("quiz: " +kol[0]);
+		System.out.println("zasob: " +kol[0]);
 		String sciezkaSmanifest = pathHome + "/euro/ZAS_" + kol[0] + "/smanifest.xml";
 		PrintWriter zapis = new PrintWriter(sciezkaSmanifest);
 		zapis.println("<?xml version=\"1.0\"?>");
@@ -120,6 +121,7 @@ public class Pars {
 		zapis.println("</relations>");
 		zapis.println("<resource>");
 		zapis.println("\t<description>");
+		// tytul i opis
 		zapis.println("\t\t<title>" + kol[2] + "</title>");
 		zapis.println("\t\t<abstract><![CDATA[<p>" + kol[3] + "</p>]]></abstract>");
 		// slowa kluczowe
@@ -128,6 +130,7 @@ public class Pars {
 			zapis.println("\t\t\t<keyword>" + sKlucz[i] + "</keyword>");
 		}
 		zapis.println("\t\t</keywords>");
+		// podstawa programowa
 		zapis.println("\t<educational>");
 		for (int i = 0; i < przedmiot.length; i++) {
 			zapis.println("\t\t<educationalLevel>");
@@ -154,11 +157,11 @@ public class Pars {
 		// System.out.println("nazwa zas "+nazwaZasobu);
 		File sc= new File(nazwaZasobu);
 		File [] screen= sc.listFiles(); 
-		//System.out.println("lista plików");
+		//System.out.println("lista plikï¿½w");
 		for (int i = 0; i < screen.length; i++) {
 			if (screen[i].getName().contains(".png") || screen[i].getName().contains(".jpg")){
 		zapis.println("<miniatureImg>" + screen[0].getName() +"</miniatureImg>");
-				System.out.println("Zasób zawiera screen");
+				System.out.println("Zasï¿½b zawiera screen");
 			}
 		}
 		zapis.println("<previewImg></previewImg>");

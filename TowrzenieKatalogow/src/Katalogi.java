@@ -4,8 +4,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
 	
 /**
  * pobiera dane z arkusza arkusz, gdzie jest lista quizow

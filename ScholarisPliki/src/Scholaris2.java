@@ -7,8 +7,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * parsowanie kart pracy
- * program pobieraj¹cy dane z arkusza i na podstawie istniej¹cych katalogow i plikow generuje plik smanifest
+ * parsowanie kart pracy i filmÃ³w
+ * program pobierajï¿½cy dane z arkusza i na podstawie istniejï¿½cych katalogow i plikow generuje plik smanifest
  * @author Euro-Forum_B3
  *
  */
@@ -20,7 +20,7 @@ public class Scholaris2 {
 	static List<String> wiersze = new ArrayList<>();
 	static int ileZapis = 0;
 	static int liczLinie = 0; // ile wierszy
-
+	static boolean czyFilmy=false; 
 	public static void czytaj_linie() throws IOException {
 		FileReader fr = new FileReader(pathHome + "/arkusz");
 		BufferedReader br = new BufferedReader(fr);
@@ -29,9 +29,17 @@ public class Scholaris2 {
 			// splitCol(d);
 			wiersze.add(d);
 			liczLinie++;
+			if (liczLinie==2) {
+				char pierwszaLitera = wiersze.get(1).charAt(0);
+				if (pierwszaLitera=='P' || pierwszaLitera=='p') {
+					czyFilmy=true; 
+					System.out.println("zasoby filmy");
+				}
+				
+			}
 		}
 
-		System.out.println(liczLinie);
+		System.out.println("Ile jest zasobow: "+liczLinie);
 		br.close();
 	}
 
@@ -103,6 +111,7 @@ public class Scholaris2 {
 	// public static void splitThis(String[] kol, String[] sKlucz)
 	public static void zapis(String[] kol, String[] sKlucz, String[] przedmiot, String[][] kod)
 			throws FileNotFoundException {
+		System.out.println("zasob: " +kol[0]);
 		String sciezkaSmanifest = pathHome + "/euro/ZAS_" + kol[0] + "/smanifest.xml";
 		PrintWriter zapis = new PrintWriter(sciezkaSmanifest);
 		zapis.println("<?xml version=\"1.0\"?>");
@@ -163,40 +172,98 @@ public class Scholaris2 {
 
 		String nazwaZasobu = katalogiQuiz[ileZapis].getPath();
 		// System.out.println("nazwa zas "+nazwaZasobu);
+		// lista plik z katalogu zasobu
 		File sc = new File(nazwaZasobu);
 		File[] screen = sc.listFiles();
-		// System.out.println("lista plików");
+		// System.out.println("lista plikï¿½w");
 		for (int i = 0; i < screen.length; i++) {
 			if (screen[i].getName().contains(".png") || screen[i].getName().contains(".jpg")){
-				System.out.println("Zasób zawiera screen");
+				System.out.println("Zasï¿½b zawiera screen");
 				zapis.println("<miniatureImg>" + screen[0].getName() + "</miniatureImg>");
 			}
 		}
 		zapis.println("<previewImg></previewImg>");
-		zapis.println("<resourceType>learning-program</resourceType>");
-		File f = new File(nazwaZasobu + "/pliki");
-		File[] pliki = f.listFiles();
-		if (pliki.length == 1) {
-			zapis.println("<aggregationLevel>single</aggregationLevel>");
+		char pierwszaLitera = kol[0].charAt(0);
+		switch (pierwszaLitera) {
+		case 'Q':
+		zapis.println("<resourceType>excercise</resourceType>");
+			break;
+		case 'K':
+		zapis.println("<resourceType>worksheet</resourceType>");
+			break;
+		case 'T':
+		zapis.println("<resourceType>test</resourceType>");
+			break;
+		// szablon
+		case 'O':
+		zapis.println("<resourceType>questionnaire</resourceType>");
+		//zapis.println("<resourceType>scenario</resourceType>");
+			break;
+		case 'P':
+		zapis.println("<resourceType>video</resourceType>");
+			break;
+
+		default:
+		System.out.println("nie moï¿½na przypisaï¿½ typu zasobu");
+			break;
+		}
+		
+		// if (pliki.length == 1) 
+		if(!czyFilmy)
+		{	
+		zapis.println("<aggregationLevel>single</aggregationLevel>");
 		} else {
 			zapis.println("<aggregationLevel>collection</aggregationLevel>");
 		}
+		// 
+        int ileKolekcji=1; 
+        if (czyFilmy==true) {
+        	ileKolekcji=4; 
+                        }
+		for (int j = 1; j <= ileKolekcji; j++) {
+			File f = new File(nazwaZasobu + "/pliki_"+j);
+			File[] pliki = f.listFiles();
 		zapis.println("<fileSet>");
 		zapis.println("\t<targets>");
 		zapis.println("\t\t<target>desktop</target>");
-		zapis.println("\t\t<target>mobile</target>");
+		zapis.println("\t\t<target>mobile</target>");		// czy mobilne przy 720?
 		zapis.println("\t</targets>");
 		for (int i = 0; i < pliki.length; i++) {
+			if(pliki[i].getName().contains(".mp4") || pliki[i].getName().contains(".MP4") ){
+				System.out.println("Zasob zawiera mp4: "+pliki[i].getName());
+				zapis.println("\t<file>");
+				zapis.println("\t\t<format>video/mp4</format>");
+				zapis.println("\t\t<name>pliki_"+j+"/" + pliki[i].getName() + "</name>");
+				zapis.println("\t\t<size>" + pliki[i].length() + "</size>");
+				zapis.println("\t</file>");
+			}
+		
+				if(pliki[i].getName().contains(".webm") || pliki[i].getName().contains(".WEBM") ){
+					System.out.println("Zasob zawiera webm: "+pliki[i].getName());
+					zapis.println("\t<file>");
+					zapis.println("\t\t<format>video/webm</format>");
+					zapis.println("\t\t<name>pliki_"+j+"/" + pliki[i].getName() + "</name>");
+					zapis.println("\t\t<size>" + pliki[i].length() + "</size>");
+					zapis.println("\t</file>");
+				}
+				if(pliki[i].getName().contains(".srt") || pliki[i].getName().contains(".SRT") ){
+					System.out.println("Zasob zawiera napis srt: "+pliki[i].getName());
+					zapis.println("\t<file>");
+					zapis.println("\t\t<format>text/plain</format>");
+					zapis.println("\t\t<name>pliki_"+j+"/" + pliki[i].getName() + "</name>");
+					zapis.println("\t\t<size>" + pliki[i].length() + "</size>");
+					zapis.println("\t</file>");
+				}
 			if (pliki[i].getName().contains(".pdf") || pliki[i].getName().contains(".PDF")) {
 				if (pliki[i].getName().contains("instrukc") || pliki[i].getName().contains("INSTRUKC")) {
-					System.out.println("Zasób zawiera instrukcjê pdf");
+					System.out.println("Zasï¿½b zawiera instrukcjï¿½ pdf: "+pliki[i].getName());
 					zapis.println("\t<file>");
 					zapis.println("\t\t<format>application/pdf</format>");
 					zapis.println("\t\t<name>pliki/" + pliki[i].getName() + "</name>");
 					zapis.println("\t\t<size>" + pliki[i].length() + "</size>");
 					zapis.println("\t</file>");
 				} else {
-					System.out.println("Zasób zawiera pdf");
+					System.out.println("Zasï¿½b zawiera pdf");
 					zapis.println("\t<file>");
 					zapis.println("\t\t<format>application/pdf</format>");
 					zapis.println("\t\t<name>pliki/" + pliki[i].getName() + "</name>");
@@ -205,7 +272,7 @@ public class Scholaris2 {
 				}
 			}
 			if (pliki[i].getName().contains(".doc") &&  !pliki[i].getName().contains(".docx")) {
-				System.out.println("Zasób zawiera doc");
+				System.out.println("Zasï¿½b zawiera doc: "+pliki[i].getName());
 				zapis.println("\t<file>");
 				zapis.println("\t\t<format>application/msword</format>");
 				zapis.println("\t\t<name>pliki/" + pliki[i].getName() + "</name>");
@@ -213,10 +280,9 @@ public class Scholaris2 {
 				zapis.println("\t</file>");
 			}
 			if (pliki[i].getName().contains(".docx") || pliki[i].getName().contains(".DOCX")) {
-				System.out.println("Zasób zawiera docx");
+				System.out.println("Zasï¿½b zawiera docx: "+pliki[i].getName());
 				zapis.println("\t<file>");
-				zapis.println(
-						"\t\t<format>application/vnd.openxmlformats-officedocument.wordprocessingml.document</format>");
+				zapis.println( "\t\t<format>application/vnd.openxmlformats-officedocument.wordprocessingml.document</format>");
 				zapis.println("\t\t<name>pliki/" + pliki[i].getName() + "</name>");
 				zapis.println("\t\t<size>" + pliki[i].length() + "</size>");
 				zapis.println("\t</file>");
@@ -224,6 +290,7 @@ public class Scholaris2 {
 		}
 
 		zapis.println("</fileSet>");
+	}
 		zapis.println("</resource>");
 		zapis.println("</scholaris> ");
 		zapis.close();
