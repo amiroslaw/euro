@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<scholaris>
+	<publishInformation>
+		<publisher>zle</publisher>
+		<identifier>Q_1_MAT_4_12</identifier>
+		<version>1</version>
+		<createDate>2014-11-13</createDate>
+		<updateDate>2014-11-13</updateDate>
+	</publishInformation>
+<relations>
+	<relation>
+		<kind>ispartof</kind>
+		<identifier>nazwa pakietu!!!</identifier>
+	</relation>
+</relations>
+<resource>
+	<description>
+		<title>Policz warzywa.</title>
+		<abstract><![CDATA[<p>Quiz interaktywny (pojedynczy wybór) rozwijający umiejętność liczenia oraz prawidłowego rozpoznawania i zaznaczania liczb.  Uczeń szuka i liczy przedmioty na obrazku, zgodnie z poleceniem, w zakresie od 6 do 7.</p>]]></abstract>
+		<keywords>
+			<keyword>liczy</keyword>
+			<keyword>liczenie</keyword>
+			<keyword>odczytywanie liczb</keyword>
+			<keyword>rozpoznawanie liczb</keyword>
+			<keyword>pojedynczy wybór</keyword>
+			<keyword>warzywa</keyword>
+			<keyword>quiz</keyword>
+			<keyword>jedzenie</keyword> 
+		</keywords>
+	<educational>
+		<educationalLevel>
+			<stage>POCZ</stage>
+			<subject>MAT2</subject>
+			<basisPoints>
+				<basisPoint>3</basisPoint>
+			</basisPoints>
+		</educationalLevel>
+	</educational>
+	</description>
+<miniatureImg>I_Q_1_MAT_4_12.png</miniatureImg>
+<previewImg></previewImg>
+<resourceType>excercise</resourceType>
+<aggregationLevel>single</aggregationLevel>
+<fileSet>
+	<targets>
+		<target>desktop</target>
+		<target>mobile</target>
+	</targets>
+	<file>
+		<format>application/zip</format>
+		<name>plik/Q_1_MAT_4_12.zip</name>
+		<size>66666</size>
+	</file>
+</fileSet>
+</resource>
+</scholaris> 
