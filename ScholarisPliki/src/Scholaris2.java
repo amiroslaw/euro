@@ -5,15 +5,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /**
  * parsowanie kart pracy i filmów
  * program pobieraj�cy dane z arkusza i na podstawie istniej�cych katalogow i plikow generuje plik smanifest
+ * uwagi:
+ * w katalogu euro nie moze byc innych plikow poza katalogami zasobow
  * @author Euro-Forum_B3
  *
  */
 public class Scholaris2 {
 	static String pathHome = System.getProperty("user.home");
+	// lista plikow w euro
 	static File folder = new File(pathHome + "/euro");
 	static File[] katalogiQuiz = folder.listFiles();
 	// static List <String> katalogiQuizu= new ArrayList<>();
@@ -22,6 +26,10 @@ public class Scholaris2 {
 	static int liczLinie = 0; // ile wierszy
 	static boolean czyFilmy=false; 
 	public static void czytaj_linie() throws IOException {
+		Arrays.sort(katalogiQuiz);
+		for (int i = 0; i < katalogiQuiz.length; i++) {
+			System.out.println(katalogiQuiz[i].getName());
+		}
 		FileReader fr = new FileReader(pathHome + "/arkusz");
 		BufferedReader br = new BufferedReader(fr);
 		String d;
@@ -44,7 +52,7 @@ public class Scholaris2 {
 	}
 
 	public static void splitCol(String s) throws IOException {
-
+		
 		String slowaKluczowe[] = null;
 
 		String kolumny[] = s.split("\t"); // zapisuje do tablicy wyrazy
@@ -169,7 +177,7 @@ public class Scholaris2 {
 
 		zapis.println("\t</educational>");
 		zapis.println("\t</description>");
-
+		
 		String nazwaZasobu = katalogiQuiz[ileZapis].getPath();
 		// System.out.println("nazwa zas "+nazwaZasobu);
 		// lista plik z katalogu zasobu
