@@ -1,17 +1,25 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 /**
- * parsowanie kart pracy i filmów
+ * parsowanie kart pracy i filmow
  * program pobieraj�cy dane z arkusza i na podstawie istniej�cych katalogow i plikow generuje plik smanifest
  * uwagi:
  * w katalogu euro nie moze byc innych plikow poza katalogami zasobow
+ * w arkuszu trzeba usunac pierwszy wiersz z nazwami kolumn
  * @author Euro-Forum_B3
  *
  */
@@ -118,9 +126,21 @@ public class Scholaris2 {
 
 	// public static void splitThis(String[] kol, String[] sKlucz)
 	public static void zapis(String[] kol, String[] sKlucz, String[] przedmiot, String[][] kod)
-			throws FileNotFoundException {
+			throws FileNotFoundException, UnsupportedEncodingException {
 		System.out.println("zasob: " +kol[0]);
 		String sciezkaSmanifest = pathHome + "/euro/ZAS_" + kol[0] + "/smanifest.xml";
+//		FileOutputStream fileStream = new FileOutputStream(new File(sciezkaSmanifest));
+//		OutputStreamWriter zapis = new OutputStreamWriter(fileStream, "UTF-8");
+//		Writer zapis = new BufferedWriter(new OutputStreamWriter(
+//			    new FileOutputStream(sciezkaSmanifest), "UTF-8"));
+//			try {
+//			    out.write(aString);
+//			} finally {
+//			    out.close();
+//			}
+//		PrintStream stream = new PrintStream(sciezkaSmanifest);
+//		PrintWriter zapis = new PrintWriter(new OutputStreamWriter(sciezkaSmanifest, "UTF-8"));
+//		PrintWriter zapis = new PrintWriter(new File(sciezkaSmanifest), "UTF-8");
 		PrintWriter zapis = new PrintWriter(sciezkaSmanifest);
 		zapis.println("<?xml version=\"1.0\"?>");
 		zapis.println("<scholaris>");

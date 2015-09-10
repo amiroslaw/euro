@@ -108,7 +108,10 @@ public class ZasPars {
 		kolumny[1] = replaceChar(kolumny[1]);
 		zapis(kolumny, slowaKluczowe, przedmioty, kody);
 	}
-
+	public static String deleteCudzy(String cudz) {
+		cudz = cudz.replace("\"", "");
+		return cudz;
+	}
 	public static String replaceChar(String znak) {
 		znak = znak.replace("/", "_");
 		znak = znak.replace("(", "_");
@@ -150,7 +153,7 @@ public class ZasPars {
 		// slowa kluczowe
 		zapis.println("\t\t<keywords>");
 		for (int i = 0; i < sKlucz.length; i++) {
-			zapis.println("\t\t\t<keyword>" + sKlucz[i] + "</keyword>");
+			zapis.println("\t\t\t<keyword>" + deleteCudzy(sKlucz[i]) + "</keyword>");
 		}
 		zapis.println("\t\t</keywords>");
 		// podstawa programowa

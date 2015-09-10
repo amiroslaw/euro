@@ -19,7 +19,7 @@ public class Katalogi {
 		static boolean czyFilmy=false; 
 		// dzieli plik na linie
 		public static void czytaj_linie() throws IOException {
-			FileReader fr = new FileReader(pathHome+"/zestaw");
+			FileReader fr = new FileReader(pathHome+"/arkusz");
 			BufferedReader br = new BufferedReader(fr);
 			String d;
 			
