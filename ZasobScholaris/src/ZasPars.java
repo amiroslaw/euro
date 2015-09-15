@@ -63,6 +63,24 @@ public class ZasPars {
 				przedmioty = kolumny[i].split(";");
 				for (int j = 0; j < przedmioty.length; j++) {
 					przedmioty[j] = przedmioty[j].trim();
+					// sprawdzanie poprawnosci podstawy programowej 
+					String prz=przedmioty[j]; 
+					if(
+							prz.equals("MUZ2")||
+							prz.equals("PLAST2")||
+							prz.equals("POL2")||
+							prz.equals("PRZYR2")||
+							prz.equals("SPOL2")||
+							prz.equals("JOB2")||
+							prz.equals("KOMP2")||
+							prz.equals("TECH2")||
+							prz.equals("ZDR2")||
+							prz.equals("MAT2")
+							){
+//						System.out.println("z³a podstawa programowa");
+					}else {
+						System.out.println("z³a podstawa programowa");
+					}
 				// sprawdzanie czy jest srednik
 				int ileDwojek = przedmioty[j].length() - przedmioty[j].replace("2", "").length();
 				if (ileDwojek>1) { 
@@ -116,7 +134,7 @@ public class ZasPars {
 		znak = znak.replace("/", "_");
 		znak = znak.replace("(", "_");
 		znak = znak.replace(")", "");
-	//	znak = znak.replace(".", "_");
+		znak = znak.replace(".", "_");
 		return znak;
 	}
 
