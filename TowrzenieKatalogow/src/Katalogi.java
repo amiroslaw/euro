@@ -69,7 +69,7 @@ public class Katalogi {
 				ileKolekcji=4; 
 			}
 			for (int i = 1; i <= ileKolekcji; i++) {
-			String folderZip = folderZasobu + "/pliki_"+i;
+			String folderZip = folderZasobu + "/PLIKI_"+i;
 			boolean success2 = (new File(folderZip)).mkdirs();
 			if (!success2) {
 				System.out.append("\n Folder pliki "+i+" nie utworzony bo juz istnieje  :\n");

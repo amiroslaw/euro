@@ -151,7 +151,9 @@ public class Scholaris2 {
 		zapis.println("\t\t<version>1</version>");
 		zapis.println("\t\t<createDate>2015-09-09</createDate>");
 		zapis.println("\t\t<updateDate>2015-09-09</updateDate>");
+		zapis.println("\t<contributors />");
 		zapis.println("\t</publishInformation>");
+		zapis.println("<foreignIdentifiers />");
 		zapis.println("<relations>");
 		zapis.println("\t<relation>");
 		if (!kol[1].isEmpty()) {
@@ -207,7 +209,7 @@ public class Scholaris2 {
 		for (int i = 0; i < screen.length; i++) {
 			if (screen[i].getName().contains(".png") || screen[i].getName().contains(".jpg")){
 				System.out.println("Zas�b zawiera screen");
-				zapis.println("<miniatureImg>" + screen[0].getName() + "</miniatureImg>");
+				zapis.println("<miniatureImg>" + screen[i].getName() + "</miniatureImg>");
 			}
 		}
 		zapis.println("<previewImg></previewImg>");
@@ -249,7 +251,7 @@ public class Scholaris2 {
         	ileKolekcji=4; 
                         }
 		for (int j = 1; j <= ileKolekcji; j++) {
-			File f = new File(nazwaZasobu + "/pliki_"+j);
+			File f = new File(nazwaZasobu + "/PLIKI_"+j);
 			File[] pliki = f.listFiles();
 		zapis.println("<fileSet>");
 		zapis.println("\t<targets>");
@@ -269,7 +271,7 @@ public class Scholaris2 {
 				if(pliki[i].getName().contains(".webm") || pliki[i].getName().contains(".WEBM") ){
 					System.out.println("Zasob zawiera webm: "+pliki[i].getName());
 					zapis.println("\t<file>");
-					zapis.println("\t\t<format>video/webm</format>");
+					zapis.println("\t\t<format>application/octet-stream</format>");
 					zapis.println("\t\t<name>pliki_"+j+"/" + pliki[i].getName() + "</name>");
 					zapis.println("\t\t<size>" + pliki[i].length() + "</size>");
 					zapis.println("\t</file>");
@@ -277,7 +279,7 @@ public class Scholaris2 {
 				if(pliki[i].getName().contains(".srt") || pliki[i].getName().contains(".SRT") ){
 					System.out.println("Zasob zawiera napis srt: "+pliki[i].getName());
 					zapis.println("\t<file>");
-					zapis.println("\t\t<format>text/plain</format>");
+					zapis.println("\t\t<format>application/octet-stream</format>");
 					zapis.println("\t\t<name>pliki_"+j+"/" + pliki[i].getName() + "</name>");
 					zapis.println("\t\t<size>" + pliki[i].length() + "</size>");
 					zapis.println("\t</file>");
